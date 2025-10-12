@@ -7,39 +7,61 @@ public class Solution {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int result = solution.solution(10, 5, new int[]{2, 2, 2, 2, 1, 1, 1, 1, 1});
+        int result = solution.solution(2, 10, new int[]{1, 1, 1, 1, 1});
         System.out.println("result = " + result);
     }
 
     public int solution(int bridge_length, int weight, int[] truck_weights) {
-        int answer = 0;
+        int time = 1;
 
         // truck_weights Stack으로 만든다.
         Stack<Integer> stack = new Stack<>();
-        for (int i=truck_weights.length-1; i >= 0; i--) {
+        for (int i = truck_weights.length - 1; i >= 0; i--) {
             stack.push(truck_weights[i]);
         }
 
-        // weight를 초과하기 전까지 pop
-        int popedElementCounts = 0;
-        int popedWeights = 0;
-        while (!stack.isEmpty()) {
-            // System.out.println("stack :" + stack);
-            int peeked = stack.peek();
-            if (popedWeights + peeked <= weight) {
-                popedWeights += stack.pop();
-                popedElementCounts++;
+        Queue<BridgeTruck> currentBridge = new LinkedList<>();
+
+        int currentBrideWeight = 0;
+        do {
+            if (!currentBridge.isEmpty()) {
+                BridgeTruck bridgeTruck = currentBridge.peek();
+                if (time - bridgeTruck.inTime >= bridge_length) { // 큐에서 나올 트럭이 있는지 체크
+                    BridgeTruck arrivalTruck = currentBridge.poll();
+                    currentBrideWeight -= arrivalTruck.weight;
+                }
+            }
+            if (!stack.empty()) {
+                int peeked = stack.peek();
+                if (currentBrideWeight + peeked <= weight && currentBridge.size() < bridge_length) { // 큐에 넣을 수 있는 트럭이 있는가?
+                    Integer leavedTruck = stack.pop();
+                    currentBrideWeight += leavedTruck;
+                    currentBridge.add(new BridgeTruck(leavedTruck, time));
+                }
             }
 
-            if (popedWeights + peeked > weight || stack.isEmpty()) {
-                // (pop한 원소의 개수-1) + bridge_length를 answer에 누적
-                answer += (popedElementCounts-1 + bridge_length);
-                // System.out.println("answer :" + answer);
-                popedElementCounts = 0;
-                popedWeights = 0;
-            }
+            System.out.println("time: " + time + " stack: " + stack + " currentBridge: " + currentBridge + " currentBridgeWeight: " + currentBrideWeight);
+            time++;
+        } while (!currentBridge.isEmpty() || time <= 0);
+
+        return time-1;
+    }
+
+    class BridgeTruck {
+        int weight;
+        int inTime;
+
+        public BridgeTruck(int weight, int inTime) {
+            this.weight = weight;
+            this.inTime = inTime;
         }
 
-        return answer + 1;
+        @Override
+        public String toString() {
+            return "BridgeTruck{" +
+                    "weight=" + weight +
+                    ", inTime=" + inTime +
+                    '}';
+        }
     }
 }
