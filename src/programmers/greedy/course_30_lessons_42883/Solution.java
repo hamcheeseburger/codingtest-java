@@ -1,4 +1,4 @@
-package programmers.course_30_lessons_42883;
+package programmers.greedy.course_30_lessons_42883;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package programmers.course_30_lessons_42747;
+package programmers.dataStructure.course_30_lessons_42747;
 
 import java.util.Arrays;
 //https://school.programmers.co.kr/learn/courses/30/lessons/42747#

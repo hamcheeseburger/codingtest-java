@@ -1,4 +1,4 @@
-package programmers.course_30_lessons_29909;
+package programmers.dataStructure.course_30_lessons_29909;
 
 class Solution_NoStack {
 

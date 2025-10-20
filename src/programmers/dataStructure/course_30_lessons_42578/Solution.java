@@ -1,4 +1,4 @@
-package programmers.course_30_lessons_42578;
+package programmers.dataStructure.course_30_lessons_42578;
 
 import java.util.*;
 
