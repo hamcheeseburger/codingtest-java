@@ -1,4 +1,4 @@
-package programmers.course_30_lessons_388353;
+package programmers.dataStructure.course_30_lessons_388353;
 
 import java.util.*;
 // https://school.programmers.co.kr/learn/courses/30/lessons/388353
